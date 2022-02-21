@@ -65,18 +65,25 @@ document.addEventListener('DOMContentLoaded', function(){
 	*/
 
 	class FoodItem{
-		constructor(img, alt, title, description, price, parentSelector){
+		constructor(img, alt, title, description, price, parentSelector, ...classes){
 			this.img = img;
 			this.alt = alt;
 			this.title = title;
 			this.description = description;
 			this.price = price;
+			this.classes = classes;
 			this.parentSelector = parentSelector;
 		}
 		render(){
 			let element = document.createElement('div');
 
-			element.classList.add('menu__item');
+			if(this.classes.length === 0){
+				this.classes.forEach(className => element.classList.add(className));
+			}else{
+				element.classList.add('menu__item');
+			}
+
+			
 			
 			element.innerHTML = `
 				<img src="${this.img}" alt="${this.alt}">
@@ -107,7 +114,10 @@ document.addEventListener('DOMContentLoaded', function(){
 								'Меню “Премиум”',
 								'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
 								550,
-								'.menu__field .container'
+								'.menu__field .container',
+								'menu__item',
+								'menu__item_premium',
+								'menu__item_center'
 							],
 				post = [
 								'img/tabs/post.jpg', 
@@ -115,7 +125,8 @@ document.addEventListener('DOMContentLoaded', function(){
 								'Меню "Постное"', 
 								'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
 								430,
-								'.menu__field .container'
+								'.menu__field .container',
+								'menu__item'
 							];
 	
 	new FoodItem(...vegy).render();
